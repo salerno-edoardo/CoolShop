@@ -8,7 +8,7 @@ namespace Esercizio
     {
         public List<string> search(string filename, int column, string key)
         {
-            List<string> ris = new List<string>();
+            List<string> results = new List<string>();
             try
             {
                 StreamReader sr = new StreamReader(filename);
@@ -18,14 +18,9 @@ namespace Esercizio
                     string[] fields = line.Split(',');
                     if (fields.Length > column && fields[column].Equals(key))
                     {
-                        ris.Add(line);
+                        results.Add(line);
                     }
                     line = sr.ReadLine();
-                }
-
-                if (ris.Count == 0)
-                {
-                    Console.WriteLine("La chiave di ricerca non ha dato alcun riscontro");
                 }
             }
             catch (Exception e)
@@ -33,7 +28,7 @@ namespace Esercizio
                 Console.WriteLine("Exception: " + e.Message);
             }
 
-            return ris;
+            return results;
         }
 
         public static void Main(string[] args)
@@ -49,10 +44,17 @@ namespace Esercizio
             string key = args[2];
 
             Program p = new Program();
-
-            foreach (var var in p.search(filename, column, key))
+            var ris = p.search(filename, column, key);
+            if (ris.Count == 0)
             {
-                Console.WriteLine(var);
+                Console.WriteLine("La chiave di ricerca non ha dato alcun riscontro");
+            }
+            else
+            {
+                foreach (var var in ris)
+                {
+                    Console.WriteLine(var);
+                }
             }
         }
     }
